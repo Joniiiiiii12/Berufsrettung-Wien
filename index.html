@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Berufsrettung Wien</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+.action-btn { display:block; width:100%; margin-bottom:1rem; text-align:left; padding:0.75rem 1rem; }
+.section-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; }
+.section-header h2 { margin:0; }
+
+
+
+
+
+
+</style>
+</head>
+<body>
+    <!-- LOGIN -->
+    <div id="login-screen" class="login-screen">
+        <div class="login-card">
+            <div class="login-logo">
+                <img src="logo.jpg" alt="Berufsrettung Wien" class="logo-img">
+            </div>
+            <h1>Berufsrettung Wien</h1>
+            <p class="login-sub">Mitarbeiter-Portal</p>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">Benutzername</label>
+                    <input type="text" id="username" value="Ralf Tieber" required autofocus>
+                </div>
+                <div class="form-group">
+                    <label for="dienstnummer">Dienstnummer</label>
+                    <input type="text" id="dienstnummer" value="ZTR-01" required>
+                </div>
+                <div id="error-message" class="error" hidden></div>
+                <button type="submit" class="btn-login">Anmelden</button>
+            </form>
+            <p class="login-footer">Nur für autorisierte Mitarbeiter der MA 70</p>
+        </div>
+    </div>
+
+    <!-- APP -->
+    <div id="app" class="app" hidden style="display:none;">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-profile">
+                <div class="profile-avatar">RT</div>
+                <div class="profile-info">
+                    <div class="profile-name" id="sidebar-name">Ralf Tieber</div>
+                    <div class="profile-role" id="sidebar-role">Techniker</div>
+                    <div class="profile-org">Berufsrettung Wien</div>
+                </div>
+            </div>
+            <div class="sidebar-dnr">DNr <span id="sidebar-dnr">ZTR-01</span></div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-group open">
+                    <button class="nav-item nav-parent active-parent" type="button">▾ MEIN DIENST</button>
+                    <div class="nav-sub">
+                        <a href="#" class="nav-sub-item" data-view="dienstplan">Dienstplan Veranstaltungen</a>
+                        <a href="#" class="nav-sub-item" data-view="urlaub">Urlaubsanträge</a>
+                        <a href="#" class="nav-sub-item" data-view="neben">Nebenbeschäftigung</a>
+                        <a href="#" class="nav-sub-item" data-view="feedback">Feedback</a>
+                        <a href="#" class="nav-sub-item active" data-view="uebersicht">Übersicht</a>
+                        <a href="#" class="nav-sub-item" data-view="kalender">Kalender</a>
+                        <a href="#" class="nav-sub-item" data-view="zeus">Zeiterfassung (ZEUS)</a>
+                        <a href="#" class="nav-sub-item" data-view="vorschriften">Vorschriften</a>
+                    </div>
+                </div>
+
+                <div class="nav-group">
+                    <button class="nav-item nav-parent" type="button">▸ EINSATZ &amp; MEDEA</button>
+                    <div class="nav-sub" hidden>
+                        <a href="#" class="nav-sub-item" data-view="einsatz">Einsatzdokumentation</a>
+                        <a href="#" class="nav-sub-item" data-view="nachbesprechung">Einsatznachbesprechung</a>
+                    </div>
+                </div>
+
+                <div class="nav-group">
+                    <button class="nav-item nav-parent" type="button">▸ RETTUNGSAKADEMIE</button>
+                    <div class="nav-sub">
+                        <a href="#" class="nav-sub-item" data-view="akademie">Übersicht</a>
+                        <a href="#" class="nav-sub-item" data-view="akademie-kurse">Kurse & Ausschreibungen</a>
+                        <a href="#" class="nav-sub-item" data-view="akademie-anfragen">Ausbildungsanfragen</a>
+                        <a href="#" class="nav-sub-item" data-view="akademie-verlauf">Mein Ausbildungsverlauf</a>
+                    </div>
+
+                </div>
+
+                <div class="nav-group">
+                    <button class="nav-item nav-parent" type="button">▸ PERSONAL &amp; AUSBILDUNG</button>
+                    <div class="nav-sub" hidden>
+                        <a href="#" class="nav-sub-item" data-view="rangtafel">Rangtafel</a>
+                        <a href="#" class="nav-sub-item" data-view="stellen">Stellenausschreibungen</a>
+                        <a href="#" class="nav-sub-item">Personalverwaltung</a>
+                    </div>
+                </div>
+
+                <div class="nav-group">
+                    <button class="nav-item nav-parent" type="button">▸ FUHRPARK</button>
+                    <div class="nav-sub" hidden>
+                        <a href="#" class="nav-sub-item" data-view="fuhrpark">Fuhrparkverwaltung</a>
+                        <a href="#" class="nav-sub-item" data-view="schaden">Schadensmeldungen</a>
+                    </div>
+                </div>
+
+                
+
+                <div class="nav-group">
+                    <button class="nav-item nav-parent" type="button">▸ VERWALTUNG</button>
+                    <div class="nav-sub" hidden>
+                        <a href="#" class="nav-sub-item" data-view="antraege">Anträge</a>
+                    </div>
+                </div>
+
+                <div class="nav-group">
+                    <button class="nav-item nav-parent" type="button" id="nav-rd">▸ RETTUNGSDIREKTION</button>
+                    <div class="nav-sub" hidden>
+                        <a href="#" class="nav-sub-item" data-view="rd-anfragen">Anfragen</a>
+                        <a href="#" class="nav-sub-item" data-view="rd-benutzer">Neue Benutzer anlegen</a>
+                    </div>
+                </div>
+            </nav>
+
+            <button class="btn-logout-side" id="logout-btn">Abmelden</button>
+        </aside>
+
+        <!-- Main -->
+        <div class="main-area">
+            <header class="top-header">
+                <div class="breadcrumb"><a href="#" id="bc-home" style="color:inherit;text-decoration:none;">Berufsrettung Wien</a> › <strong id="bc-current">Übersicht</strong></div>
+            </header>
+
+            <div class="content">
+                <div class="page-title-row">
+                    <h1 class="page-title">
+                        <span class="title-icon">▣</span> Berufsrettung Wien
+                    </h1>
+                </div>
+
+                <!-- Welcome Banner -->
+                <div class="welcome-banner">
+                    <div>
+                        <h2>Willkommen, <span id="welcome-name">Ralf Tieber</span></h2>
+                        <p>Intranet der Berufsrettung Wien (MA 70).</p>
+                    </div>
+                    <div class="banner-badge">Berufsrettung Wien</div>
+                </div>
+
+                <div id="view-dienstplan" class="view-panel" style="display:none;margin-top:1rem;">
+                    <div class="zeus-header">
+                        <h2>📅 Dienstplan – Veranstaltungen</h2>
+                    </div>
+                    <div id="dp-create" style="margin-bottom:1rem;">
+                        <div class="zeus-card" style="max-width:500px;">
+                            <h3 style="margin:0 0 0.75rem;font-size:0.95rem;">📝 Neue Veranstaltung</h3>
+                            <label>Titel</label>
+                            <input type="text" id="dp-titel" placeholder="z. B. #4hWien">
+                            <label>Datum/Zeit</label>
+                            <input type="text" id="dp-zeit" placeholder="z. B. 08.11.26, 18:30 – 23:00">
+                            <label>Ort</label>
+                            <input type="text" id="dp-ort" placeholder="z. B. Rettungszentrale">
+                            <label>Beschreibung</label>
+                            <textarea id="dp-beschreibung" rows="2"></textarea>
+                            <button type="button" id="dp-save" class="zeus-btn primary action-btn">Veröffentlichen</button>
+                        </div>
+                    </div>
+                    <div class="cal-tabs" style="margin-bottom:1rem;">
+                        <button class="cal-tab active" data-dp="anstehend">📅 Anstehend</button>
+                        <button class="cal-tab" data-dp="vergangen">🕐 Vergangen</button>
+                    </div>
+                    <div id="dp-anstehend">
+                        <h3 style="margin:1rem 0 0.5rem;font-size:0.95rem;">👤 VERANSTALTUNGEN</h3>
+                        <div id="dp-list"><p class="mb-empty">Keine Veranstaltungen.</p></div>
+                    </div>
+                    <div id="dp-vergangen" style="display:none;">
+                        <h3 style="margin:1rem 0 0.5rem;font-size:0.95rem;">👤 VERGANGENE VERANSTALTUNGEN</h3>
+                        <p class="mb-empty">Keine vergangenen Veranstaltungen.</p>
+                    </div>
+                </div>
+
+                <div id="view-urlaub" class="view-panel" style="display:none;">
+                    <div class="zeus-header">
+                        <h2>📅 Urlaubsanträge</h2>
+                    </div>
+                    <button id="urlaub-open" type="button" class="zeus-btn primary action-btn">+ Urlaub beantragen</button>
+                    <h3>MEINE ANTRÄGE</h3>
+                    <table class="zeus-table">
+                        <thead>
+                            <tr>
+                                <th>Zeitraum</th>
+                                <th>Grund</th>
+                                <th>Status</th>
+                                <th>Anmerkung</th>
+                            </tr>
+                        </thead>
+                        <tbody id="urlaub-list">
+                            <tr><td colspan="4" style="text-align:center;color:#94a3b8;">Keine Anträge.</td></tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Modal -->
+                    <div id="urlaub-modal" class="modal" style="display:none;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <span>+ Urlaub beantragen</span>
+                                <button id="urlaub-close" type="button" class="modal-close">×</button>
+                            </div>
+                            <div class="modal-body">
+                                <label>Von</label>
+                                <input type="date" id="urlaub-von">
+                                <label>Bis</label>
+                                <input type="date" id="urlaub-bis">
+                                <label>Grund (optional)</label>
+                                <textarea id="urlaub-grund" rows="3"></textarea>
+                                <button id="urlaub-submit" type="button" class="zeus-btn primary" style="width:100%;margin-top:1rem;">✈ Einreichen</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="view-neben" class="view-panel" style="display:none;">
+                    <div class="zeus-header">
+                        <h2>📋 Antrag auf Nebenbeschäftigung</h2>
+                    </div>
+                    <button id="neben-open" type="button" class="zeus-btn primary action-btn">+ Nebenbeschäftigung melden</button>
+                    <h3>MEINE ANTRÄGE</h3>
+                    <table class="zeus-table">
+                        <thead>
+                            <tr>
+                                <th>Tätigkeit</th>
+                                <th>Stunden / Woche</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="neben-list">
+                            <tr><td colspan="3" style="text-align:center;color:#94a3b8;">Keine Anträge.</td></tr>
+                        </tbody>
+                    </table>
+
+                    <div id="neben-modal" class="modal" style="display:none;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <span>+ Nebenbeschäftigung melden</span>
+                                <button id="neben-close" type="button" class="modal-close">×</button>
+                            </div>
+                            <div class="modal-body">
+                                <label>Arbeitgeber / Tätigkeit</label>
+                                <input type="text" id="neben-arbeitgeber">
+                                <label>Beschreibung</label>
+                                <textarea id="neben-beschreibung" rows="3"></textarea>
+                                <label>Stunden / Woche</label>
+                                <input type="text" id="neben-stunden" placeholder="z. B. 8">
+                                <button id="neben-submit" type="button" class="zeus-btn primary" style="width:100%;margin-top:1rem;">✈ Einreichen</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="view-feedback" class="view-panel" style="display:none;">
+                    <div class="zeus-header">
+                        <h2>💬 Feedback</h2>
+                    </div>
+                    <button id="feedback-open" type="button" class="zeus-btn primary action-btn">+ Feedback abgeben</button>
+                    <h3>MEINE MELDUNGEN</h3>
+                    <div id="feedback-list" class="vorschriften-list">
+                        <p class="mb-empty">Keine Meldungen.</p>
+                    </div>
+
+                    <div id="feedback-modal" class="modal" style="display:none;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <span>+ Feedback abgeben</span>
+                                <button id="feedback-close" type="button" class="modal-close">×</button>
+                            </div>
+                            <div class="modal-body">
+                                <label>Kategorie</label>
+                                <select id="feedback-kategorie">
+                                    <option>FISU</option>
+                                    <option>Personal</option>
+                                </select>
+                                <label>Betreff</label>
+                                <input type="text" id="feedback-betreff">
+                                <label>Text</label>
+                                <textarea id="feedback-text" rows="4"></textarea>
+                                <button id="feedback-submit" type="button" class="zeus-btn primary" style="width:100%;margin-top:1rem;">✈ Absenden</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="view-einsatz" class="view-panel" style="display:none;">
+                    <div class="akh-mini" id="akh-mini">
+                        <span class="akh-tag" data-dept="zna">ZNA 8/8 frei</span>
+                        <span class="akh-tag" data-dept="chir">CHIR 8/8 frei</span>
+                        <span class="akh-tag" data-dept="int">INT 8/8 frei</span>
+                        <span class="akh-tag" data-dept="icu">ICU 6/6 frei</span>
+                        <span class="akh-tag" data-dept="psy">PSY 4/4 frei</span>
+                    </div>
+                    <div class="urlaub-header" style="margin-top:1.5rem;">
+                        <h2>📋 Einsatzdokumentation</h2>
+                        <span id="einsatz-count">0 eigene Berichte</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;margin-bottom:1rem;">
+                        <button id="einsatz-open" type="button" class="zeus-btn primary action-btn">+ Neuer Bericht</button>
+                    </div>
+                    <h3>MEINE BERICHTE</h3>
+                    <div id="einsatz-list" class="vorschriften-list">
+                        <p class="mb-empty">Noch keine eigenen Berichte. Mit „Neuer Bericht“ oben starten.</p>
+                    </div>
+
+                    <div id="einsatz-modal" class="modal" style="display:none;">
+                        <div class="modal-content modal-wide">
+                            <div class="doc-header">
+                                <div>
+                                    <strong>Neue Dokumentation</strong>
+                                    <div style="font-size:0.75rem;opacity:0.8;">Schritt für Schritt ausfüllen — oder alles auf einmal.</div>
+                                </div>
+                                <button id="einsatz-close" type="button" class="modal-close" style="color:#fff;">×</button>
+                            </div>
+                            <div class="doc-steps">
+                                <span class="doc-step active">1 Einsatzdaten</span>
+                                <span class="doc-step">2 Patient(en)</span>
+                                <span class="doc-step">3 Anamnese / Ergebnis</span>
+                                <span class="doc-step">4 Erstbefund & Diagnose</span>
+                                <span class="doc-step">5 Einsatzbeschreibung</span>
+                                <span class="doc-step">6 Maßnahmen – Monitoring</span>
+                                <span class="doc-step">7 Maßnahmen</span>
+                                <span class="doc-step">8 Notfallakt / Beschwerden</span>
+                                <span class="doc-step">9 Endbefund</span>
+                            </div>
+                            <div class="modal-body" style="max-height:60vh;overflow:auto;">
+                                <div class="doc-step-panel" data-step="1">
+                                    <h4 style="margin-bottom:0.75rem;">Einsatzdaten</h4>
+                                    <label>Einsatznummer</label>
+                                    <input type="text" id="einsatz-nummer" placeholder="EMD Einsatznummer">
+                                    <label>Einsatzcode</label>
+                                    <div id="einsatz-selected" style="display:none;margin-bottom:0.5rem;padding:0.55rem 0.75rem;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;font-size:0.95rem;">
+                                        <span style="display:inline-flex;align-items:center;gap:0.5rem;">
+                                            <span style="width:1rem;height:1rem;border:2px solid #16a34a;border-radius:50%;display:inline-block;position:relative;">
+                                                <span style="position:absolute;inset:2px;background:#16a34a;border-radius:50%;"></span>
+                                            </span>
+                                            <span id="einsatz-selected-text"></span>
+                                        </span>
+                                    </div>
+                                    <select id="einsatz-kat">
+                                        <option value="">Kategorie wählen</option>
+                                        <option value="01">01 – Bauchschmerzen – Beschwerden</option>
+                                        <option value="02">02 – Allergie / Kontakt mit giftigen Tieren</option>
+                                        <option value="03">03 – Tierbiss / Tierangriff</option>
+                                        <option value="04">04 – Verbrechen</option>
+                                        <option value="05">05 – Rückenschmerzen</option>
+                                        <option value="06">06 – Atembeschwerden</option>
+                                        <option value="07">07 – Verbrennungen</option>
+                                        <option value="08">08 – Kohlenmonoxid</option>
+                                        <option value="09">09 – Kreislaufstillstand</option>
+                                        <option value="10">10 – Brustschmerzen</option>
+                                        <option value="11">11 – Ersticken</option>
+                                        <option value="12">12 – Krampfanfall</option>
+                                        <option value="13">13 – Blutzuckerentgleisung</option>
+                                        <option value="14">14 – Ertrinken</option>
+                                        <option value="15">15 – Stromunfall</option>
+                                        <option value="16">16 – Augenprobleme</option>
+                                        <option value="17">17 – Sturz</option>
+                                        <option value="18">18 – Kopfschmerzen</option>
+                                        <option value="19">19 – Herzschmerzen</option>
+                                        <option value="20">20 – Hitze / Kälte</option>
+                                        <option value="21">21 – Blutung</option>
+                                        <option value="22">22 – Unzugänglich / Verschüttete Person</option>
+                                        <option value="23">23 – Überdosis</option>
+                                        <option value="24">24 – Schwangerschaft</option>
+                                        <option value="25">25 – Psychiatrie</option>
+                                        <option value="26">26 – Kranke Person</option>
+                                        <option value="27">27 – Stich- / Schuss- / Pfählungsverletzung</option>
+                                        <option value="28">28 – Schlaganfall</option>
+                                        <option value="29">29 – Verkehrsunfall</option>
+                                        <option value="30">30 – Verletzungen</option>
+                                        <option value="31">31 – Bewusstlosigkeit</option>
+                                        <option value="32">32 – Unklares Geschehen</option>
+                                        <option value="37">37 – Untersuchung / Transport</option>
+                                        <option value="42">42 – Nachforderung</option>
+                                        <option value="DF">DF – Dienstfahrten</option>
+                                    </select>
+                                    <input id="einsatz-suche" type="text" placeholder="Code oder Text suchen (ganze AAO) ..." style="margin-top:0.5rem;width:100%;">
+                                    <div id="einsatz-ergebnis" style="max-height:220px;overflow:auto;border:1px solid #e5e7eb;border-radius:8px;margin-top:0.5rem;display:none;"></div>
+                                    <input type="hidden" id="einsatz-code" name="einsatz-code">
+                                    <div class="form-row" style="margin-top:0.75rem;">
+                                        <div><label>Datum</label><input type="date" id="einsatz-datum"></div>
+                                        <div><label>Uhrzeit</label><input type="time" id="einsatz-uhrzeit"></div>
+                                        <div><label>Alarmierungszeit</label><input type="time"></div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div><label>Abfahrtszeit</label><input type="time"></div>
+                                        <div><label>Ankunft Einsatzort</label><input type="time"></div>
+                                        <div><label>Abfahrt Einsatzort</label><input type="time"></div>
+                                        <div><label>Einsatzende</label><input type="time"></div>
+                                    </div>
+                                    <label>Einsatzort</label>
+                                    <input type="text" id="einsatz-ort" placeholder="Straße, Nr., 1xxx Wien">
+                                    <label>Abgabeort</label>
+                                    <input type="text" id="einsatz-abgabe" placeholder="z. B. AKH Wien – Notaufnahme">
+                                    <div class="form-row">
+                                        <div>
+                                            <label>Polizei beteiligt</label>
+                                            <select><option>–</option><option>Ja</option><option>Nein</option></select>
+                                        </div>
+                                        <div>
+                                            <label>Feuerwehr beteiligt</label>
+                                            <select><option>–</option><option>Ja</option><option>Nein</option></select>
+                                        </div>
+                                    </div>
+                                    <label>Weitere Organisationen</label>
+                                    <input type="text">
+                                    <label>Einsatzmittel</label>
+                                    <input type="text" placeholder="z. B. RTW 7D-1, NEF 7D-2">
+                                    <label>Besatzung</label>
+                                    <textarea rows="2" placeholder="Namen / Dienstnummern der Besatzung"></textarea>
+                                    <label>Kostenträger</label>
+                                    <select><option>–</option><option>Stadt</option><option>Kasse</option><option>Privat</option><option>Firma</option></select>
+                                    <label>Firma / Veranstalter</label>
+                                    <input type="text">
+                                </div>
+
+                                <div class="doc-step-panel" data-step="2" style="display:none;">
+                                    <h4 style="margin-bottom:0.25rem;">Patient(in)</h4>
+                                    <p style="margin:0 0 1rem;color:#555;font-size:0.9rem;">Erfassung sämtlicher Patientendaten</p>
+                                    <div class="form-row">
+                                        <div><label>Vorname</label><input type="text"></div>
+                                        <div><label>Nachname</label><input type="text"></div>
+                                        <div><label>Geburtsdatum</label><input type="date"></div>
+                                        <div><label>Alter</label><input type="number" min="0" max="120"></div>
+                                        <div>
+                                            <label>Geschlecht</label>
+                                            <select>
+                                                <option value="">–</option>
+                                                <option>männlich</option>
+                                                <option>weiblich</option>
+                                                <option>divers</option>
+                                            </select>
+                                        </div>
+                                        <div><label>Sozialversicherungsnummer</label><input type="text"></div>
+                                    </div>
+                                    <label>Versicherung</label>
+                                    <select style="max-width:280px;">
+                                        <option value="">–</option>
+                                        <option>ÖGK</option>
+                                        <option>BVAEB</option>
+                                        <option>SVS</option>
+                                        <option>KFA</option>
+                                        <option>Privat</option>
+                                        <option>Sonstige</option>
+                                    </select>
+                                    <label>Adresse</label>
+                                    <input type="text">
+                                    <label>Telefonnummer (optional)</label>
+                                    <input type="tel" style="max-width:280px;">
+                                </div>
+
+                                <div class="doc-step-panel" data-step="3" style="display:none;">
+                                    <h4 style="margin-bottom:0.75rem;">Anamnese / Ergebnis</h4>
+                                    <label>Anamnese (Freitext)</label>
+                                    <textarea rows="4"></textarea>
+                                    <label>Laufende Medikamente</label>
+                                    <textarea rows="3"></textarea>
+                                    <label>Allergien</label>
+                                    <input type="text" style="max-width:320px;">
+                                    <label>Vorerkrankungen</label>
+                                    <textarea rows="3"></textarea>
+                                    <div class="form-row">
+                                        <div><label>Unverträglichkeiten</label><input type="text"></div>
+                                        <div><label>Letzte Mahlzeit / Flüssigkeit</label><input type="text" placeholder="Was und wann"></div>
+                                        <div><label>Risikofaktoren</label><input type="text" placeholder="z. B. Rauchen, Antikoagulation, …"></div>
+                                    </div>
+                                </div>
+
+                                <div class="doc-step-panel" data-step="4" style="display:none;">
+                                    <h4 style="margin-bottom:0.75rem;">Erstbefund & Diagnose</h4>
+                                    <div class="form-row">
+                                        <div>
+                                            <label>AVPU</label>
+                                            <select>
+                                                <option value="">–</option>
+                                                <option>A – wach</option>
+                                                <option>V – auf Ansprache</option>
+                                                <option>P – auf Schmerz</option>
+                                                <option>U – keine Reaktion</option>
+                                            </select>
+                                        </div>
+                                        <div><label>GCS</label><input type="number" min="3" max="15" placeholder="3–15"></div>
+                                        <div>
+                                            <label>NACA</label>
+                                            <select>
+                                                <option value="">–</option>
+                                                <option>I</option>
+                                                <option>II</option>
+                                                <option>III</option>
+                                                <option>IV</option>
+                                                <option>V</option>
+                                                <option>VI</option>
+                                                <option>VII</option>
+                                            </select>
+                                        </div>
+                                        <div><label>Bewusstseinslage</label><input type="text"></div>
+                                        <div><label>Allgemeinzustand</label><input type="text"></div>
+                                    </div>
+                                    <label>Wie wurde der Patient vorgefunden?</label>
+                                    <textarea rows="3"></textarea>
+                                    <label>Verdachtsdiagnose</label>
+                                    <input type="text">
+                                    <div class="form-row">
+                                        <div><label>Messwerte</label><input type="text"></div>
+                                        <div><label>Leitsymptome</label><input type="text"></div>
+                                    </div>
+                                    <label>Arbeitsdiagnose</label>
+                                    <input type="text">
+                                </div>
+
+                                <div class="doc-step-panel" data-step="5" style="display:none;">
+                                    <h4 style="margin-bottom:0.25rem;">Einsatzbeschreibung</h4>
+                                    <p style="margin:0 0 1rem;color:#555;font-size:0.9rem;">Dokumentation des Einsatzes</p>
+                                    <label>Einsatzart</label>
+                                    <div style="display:flex;flex-wrap:wrap;gap:0.6rem 1.2rem;padding:0.6rem;border:1px solid #e5e7eb;border-radius:8px;margin-bottom:0.75rem;">
+                                        <label style="font-weight:400;"><input type="checkbox"> Sturz</label>
+                                        <label style="font-weight:400;"><input type="checkbox"> Verkehrsunfall</label>
+                                        <label style="font-weight:400;"><input type="checkbox"> Arbeitsunfall</label>
+                                        <label style="font-weight:400;"><input type="checkbox"> Erkrankung</label>
+                                        <label style="font-weight:400;"><input type="checkbox"> Reanimation</label>
+                                        <label style="font-weight:400;"><input type="checkbox"> Psychischer Notfall</label>
+                                        <label style="font-weight:400;"><input type="checkbox"> Vergiftung</label>
+                                        <label style="font-weight:400;"><input type="checkbox"> Brandverletzung</label>
+                                        <label style="font-weight:400;"><input type="checkbox"> Bereitstellung</label>
+                                        <label style="font-weight:400;"><input type="checkbox"> Ambulanz-/Sicherheitsdienst</label>
+                                        <label style="font-weight:400;"><input type="checkbox"> Sonstiger Einsatz</label>
+                                    </div>
+                                    <label>Einsatzablauf (Freitext)</label>
+                                    <textarea rows="4" placeholder="Zusätzliche Freitextbeschreibung des gesamten Einsatzablaufs."></textarea>
+                                </div>
+
+                                <div class="doc-step-panel" data-step="6" style="display:none;">
+                                    <h4 style="margin-bottom:0.75rem;">Maßnahmen – Monitoring</h4>
+                                    <div class="form-row">
+                                        <div><label>EKG</label><input type="text" placeholder="z. B. Sinusrhythmus"></div>
+                                        <div><label>RR</label><input type="text" placeholder="z. B. 120/80"></div>
+                                        <div><label>BPM / Puls</label><input type="text"></div>
+                                        <div><label>SpO₂</label><input type="text" placeholder="z. B. 98 %"></div>
+                                        <div><label>EtCO₂</label><input type="text"></div>
+                                        <div><label>Temperatur</label><input type="text" placeholder="°C"></div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div><label>Blutzucker</label><input type="text" placeholder="mg/dl"></div>
+                                        <div><label>Atemfrequenz</label><input type="text" placeholder="/min"></div>
+                                    </div>
+                                </div>
+
+                                <div class="doc-step-panel" data-step="7" style="display:none;">
+                                    <h4 style="margin-bottom:0.75rem;">Maßnahmen</h4>
+                                    <label>Durchgeführte Maßnahmen</label>
+                                    <div style="display:flex;flex-wrap:wrap;gap:0.6rem 1.2rem;padding:0.6rem;border:1px solid #e5e7eb;border-radius:8px;margin-bottom:0.75rem;">
+                                        <label style="font-weight:400;"><input type="checkbox"> Lagerung</label>
+                                        <label style="font-weight:400;"><input type="checkbox"> Kühlung</label>
+                                        <label style="font-weight:400;"><input type="checkbox"> Lokaler Wärmeerhalt</label>
+                                        <label style="font-weight:400;"><input type="checkbox"> Sauerstoffgabe</label>
+                                        <label style="font-weight:400;"><input type="checkbox"> Immobilisation</label>
+                                        <label style="font-weight:400;"><input type="checkbox"> Infusion</label>
+                                        <label style="font-weight:400;"><input type="checkbox"> i.v.-Zugang</label>
+                                        <label style="font-weight:400;"><input type="checkbox"> i.o.-Zugang</label>
+                                        <label style="font-weight:400;"><input type="checkbox"> Beatmung</label>
+                                        <label style="font-weight:400;"><input type="checkbox"> Defibrillation</label>
+                                        <label style="font-weight:400;"><input type="checkbox"> Reanimation</label>
+                                    </div>
+                                    <label>Medikamente</label>
+                                    <div id="med-list">
+                                        <div class="form-row med-row" style="align-items:flex-end;margin-bottom:0.4rem;">
+                                            <div style="flex:2;"><input type="text" placeholder="Medikament"></div>
+                                            <div style="flex:1.5;"><input type="text" placeholder="Dosierung"></div>
+                                            <div style="flex:1;"><input type="time"></div>
+                                            <div style="flex:1;">
+                                                <select>
+                                                    <option>–</option>
+                                                    <option>i.v.</option>
+                                                    <option>i.m.</option>
+                                                    <option>s.c.</option>
+                                                    <option>p.o.</option>
+                                                    <option>inh.</option>
+                                                </select>
+                                            </div>
+                                            <button type="button" class="med-remove" style="background:#ef4444;color:#fff;border:none;border-radius:6px;width:32px;height:32px;cursor:pointer;font-size:1.1rem;">×</button>
+                                        </div>
+                                    </div>
+                                    <button type="button" id="med-add" class="cal-btn" style="margin:0.4rem 0 0.8rem;">+ Weiteres Medikament</button>
+                                    <label>Sonstige Maßnahmen (Freitext)</label>
+                                    <textarea rows="3"></textarea>
+                                </div>
+
+                                <div class="doc-step-panel" data-step="8" style="display:none;">
+                                    <h4 style="margin-bottom:0.75rem;">Notfallzeit / Beschwerdebeginn / Unfallzeitpunkt</h4>
+                                    <div class="form-row">
+                                        <div><label>Notrufzeit</label><input type="time"></div>
+                                        <div><label>Beschwerdebeginn</label><input type="text"></div>
+                                        <div><label>Unfallzeitpunkt</label><input type="text"></div>
+                                        <div><label>Symptombeginn</label><input type="text"></div>
+                                    </div>
+                                </div>
+
+                                <div class="doc-step-panel" data-step="9" style="display:none;">
+                                    <h4 style="margin-bottom:0.75rem;">Endbefund</h4>
+                                    <label>Zustand bei Übergabe im Krankenhaus</label>
+                                    <input type="text">
+                                    <label>Bewusstseinslage bei Übergabe</label>
+                                    <input type="text" style="max-width:320px;">
+                                    <label>Veränderungen während des Einsatzes</label>
+                                    <textarea rows="3"></textarea>
+                                    <label>An wen wurde der Pat. übergeben und wo</label>
+                                    <input type="text">
+                                </div>
+<div class="doc-footer">
+                                <button type="button" class="cal-btn" id="einsatz-close2">← Zurück</button>
+                                <div>
+                                    <button type="button" class="zeus-btn primary" id="einsatz-submit">Weiter →</button>
+                                    <button type="button" id="einsatz-sichtung" class="zeus-btn" style="margin-top:0.4rem;background:#16a34a;color:#fff;border-color:#16a34a;">Einreichen zur Sichtung</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+</div>
+                
+    </div>
+
+                <div id="view-nachbesprechung" class="view-panel" style="display:none;">
+                    <div class="zeus-header">
+                        <h2>💬 Einsatznachbesprechung</h2>
+                    </div>
+                                        <div id="nach-form" class="zeus-card" style="margin-bottom:1rem;max-width:500px;">
+                        <label>Einsatz (Nummer / Bezeichnung)</label>
+                        <input type="text" id="nach-einsatz" placeholder="z. B. 2026-070-1183 · Verkehrsunfall Gürtel">
+                        <label>👍 Was lief gut?</label>
+                        <textarea id="nach-gut" rows="3"></textarea>
+                        <label>👎 Was lief nicht gut?</label>
+                        <textarea id="nach-nichtgut" rows="3"></textarea>
+                        <label>💡 Verbesserungen / Maßnahmen</label>
+                        <textarea id="nach-verbesserungen" rows="3"></textarea>
+                        <button type="button" id="nach-save" class="zeus-btn primary" style="margin-top:0.75rem;">💾 Speichern</button>
+                    </div>
+                    <h3>MEINE NACHBESPRECHUNGEN</h3>
+                    <div id="nach-list">
+                        <p class="mb-empty">Noch keine Nachbesprechungen.</p>
+                    </div>
+                </div>
+
+                <div id="view-akademie" class="view-panel" style="display:none;">
+                    <div class="zeus-header">
+                        <h2>🏠 Rettungsakademie</h2>
+                    </div>
+                    <div class="cal-tabs" style="margin-bottom:1rem;">
+                        <button class="cal-tab active" data-akademie="uebersicht">📊 Übersicht</button>
+                        <button class="cal-tab" data-akademie="kurse">🏠 Kurse & Ausschreibungen</button>
+                        <button class="cal-tab" data-akademie="anfragen">📍 Ausbildungsanfragen</button>
+                        <button class="cal-tab" data-akademie="verlauf">🕐 Mein Ausbildungsverlauf</button>
+                    </div>
+                    <div id="akademie-uebersicht">
+                        <div id="kurs-create" style="margin-bottom:1rem;">
+                            <div class="zeus-card" style="max-width:500px;">
+                                <h3 style="margin:0 0 0.75rem;font-size:0.95rem;">📝 Neuen Kurs ausschreiben</h3>
+                                <label>Kurstitel</label>
+                                <input type="text" id="kurs-titel" placeholder="z. B. NFS Ausbildung">
+                                <label>Für</label>
+                                <select id="kurs-fuer">
+                                    <option value="alle">Alle Mitglieder</option>
+                                    <option value="Dr.med. Ralf Tieber">Dr.med. Ralf Tieber</option>
+                                </select>
+                                <label>Beschreibung</label>
+                                <textarea id="kurs-beschreibung" rows="3"></textarea>
+                                <button type="button" id="kurs-save" class="zeus-btn primary action-btn">Veröffentlichen</button>
+                            </div>
+                        </div>
+                        <h3 style="margin:1rem 0 0.5rem;font-size:0.95rem;">📋 MEINE KURSE</h3>
+                        <div class="zeus-card" style="margin-bottom:1rem;">
+                            <p class="mb-empty">Du bist derzeit für keinen Kurs angemeldet.</p>
+                        </div>
+                        <h3 style="margin:1rem 0 0.5rem;font-size:0.95rem;">📢 AKTUELLE AUSSCHREIBUNGEN</h3>
+                        <p class="mb-empty">Keine aktuellen Ausschreibungen.</p>
+                    </div>
+                    <div id="akademie-kurse" style="display:none;">
+                        <div class="vorschriften-filters" style="margin-bottom:1rem;">
+                            <div class="filter-group">
+                                <button class="filter-btn active">Alle Arten</button>
+                                <button class="filter-btn">Lehraussagen</button>
+                                <button class="filter-btn">Standart Operating Procedures</button>
+                                <button class="filter-btn">Dienstanweisungen</button>
+                                <button class="filter-btn">Lehrgänge</button>
+                            </div>
+                            <div class="sachgebiet" style="margin-top:0.5rem;">
+                                Sachgebiet: 
+                                <button class="filter-chip active">alle</button>
+                                <button class="filter-chip">Medizinisch</button>
+                                <button class="filter-chip">Organisatorisch</button>
+                                <button class="filter-chip">Allgemein</button>
+                            </div>
+                            
+                        </div>
+                        <h3 style="margin:1rem 0 0.5rem;font-size:0.95rem;">📋 OFFENE KURSE</h3>
+                        <p class="mb-empty">Keine offenen Kurse.</p>
+                        <h3 style="margin:1.5rem 0 0.5rem;font-size:0.95rem;">📁 ABGESCHLOSSEN / ABGESAGT</h3>
+                        <p class="mb-empty">Noch nichts.</p>
+                    </div>
+                    <div id="akademie-anfragen" style="display:none;">
+                        <div class="zeus-card" style="margin-bottom:1rem;">
+                            <h3 style="margin:0 0 0.75rem;font-size:0.95rem;">📍 NEUE AUSBILDUNGSANFRAGE</h3>
+                            <label>Kurs</label>
+                            <select id="anfrage-kurs">
+                                <option>— anderer Kurs / Aufstieg (unten angeben) —</option>
+                            </select>
+                            <label>Ziel (wenn kein Kurs gewählt)</label>
+                            <input type="text" id="anfrage-ziel" placeholder="z. B. Aufstieg Notfallsanitäter/in">
+                            <label>Begründung</label>
+                            <textarea id="anfrage-begruendung" rows="4"></textarea>
+                            <p style="font-size:0.8rem;color:#6b7280;">Die Voraussetzungen (ZEUS-Stunden, Angenommene MEDEA-Berichte, Disziplinarverfahren und ggf. Qualifikationen des Kurses) werden automatisch geprüft und mitgeschickt.</p>
+                            <button type="button" id="anfrage-save" class="zeus-btn primary">📍 Anfrage stellen</button>
+                        </div>
+                        <h3 style="margin:1rem 0 0.5rem;font-size:0.95rem;">🕐 MEINE ANFRAGEN</h3>
+                        <div id="anfrage-list">
+                            <p class="mb-empty">Keine Anfragen.</p>
+                        </div>
+                    </div>
+                    <div id="akademie-verlauf" style="display:none;">
+                        <p style="margin-bottom:1rem;">Ausbildungsstunden über die Rettungsakademie: <strong>0 h</strong> (in ZEUS als Ausbildung gutgeschrieben)</p>
+                        <h3 style="margin:1rem 0 0.5rem;font-size:0.95rem;">🎓 QUALIFIKATIONEN</h3>
+                        <p class="mb-empty">Keine Qualifikationen.</p>
+                        <h3 style="margin:1rem 0 0.5rem;font-size:0.95rem;">📚 KURSE</h3>
+                        <p class="mb-empty">Noch keine Kursteilnahmen.</p>
+                    </div>
+                </div>
+
+                <div id="view-stellen" class="view-panel" style="display:none;">
+                    <div class="zeus-header">
+                        <h2>📋 Stellenausschreibungen</h2>
+                    </div>
+                    <div id="stelle-create" style="margin-bottom:1rem;">
+                        <div class="zeus-card" style="max-width:500px;">
+                            <h3 style="margin:0 0 0.75rem;font-size:0.95rem;">📝 Neue Stelle ausschreiben</h3>
+                            <label>Stellentitel</label>
+                            <input type="text" id="stelle-titel" placeholder="z. B. Notfallsanitäter">
+                            <label>Beschreibung</label>
+                            <textarea id="stelle-beschreibung" rows="3"></textarea>
+                            <button type="button" id="stelle-save" class="zeus-btn primary action-btn">Veröffentlichen</button>
+                        </div>
+                    </div>
+                    <div id="stelle-list">
+                        <p class="mb-empty">Derzeit keine Ausschreibungen.</p>
+                    </div>
+                </div>
+
+                <div id="view-fuhrpark" class="view-panel" style="display:none;">
+                    <div class="zeus-header">
+                        <h2>🚗 Fuhrparkverwaltung</h2>
+                    </div>
+                    <div class="cal-tabs" style="flex-wrap:wrap;gap:0.4rem;margin-bottom:1rem;">
+                        <button class="cal-tab active">🚑 Alle (60)</button>
+                        <button class="cal-tab">🚑 Rettungstransportwagen (12)</button>
+                        <button class="cal-tab">🚑 Notarzt Einsatzfahrzeug (8)</button>
+                        <button class="cal-tab">👨‍⚕️ Oberarzt (5)</button>
+                        <button class="cal-tab">👁️ Field Supervisor (3)</button>
+                        <button class="cal-tab">⭐ SEG - Hauptinspektionsoffizier (4)</button>
+                        <button class="cal-tab">⭐ SEG - Einsatzleiter (3)</button>
+                        <button class="cal-tab">⭐ SEG - Führungsunterstützung (2)</button>
+                        <button class="cal-tab">🪢 SEG - Seiltechnik Einsatzgruppe (2)</button>
+                        <button class="cal-tab">🚛 SEG - Sonderfahrzeuge (5)</button>
+                        <button class="cal-tab">🚐 SEG - Sonstige Fahrzeuge (5)</button>
+                        <button class="cal-tab">🏥 Intensivtransportfahrzeuge (3)</button>
+                        <button class="cal-tab">🤝 Freiwilliger Rettungsdienst (5)</button>
+                        <button class="cal-tab">🚗 Sonstige Fahrzeuge (2)</button>
+                        <button class="cal-tab">🚁 Notarzt-Hubschrauber (1)</button>
+                    </div>
+                    <p class="mb-empty">Fahrzeugliste folgt.</p>
+                </div>
+
+                <div id="view-schaden" class="view-panel" style="display:none;">
+                    <div class="zeus-header">
+                        <h2>🚗 Schadensmeldungen</h2>
+                        <span id="schaden-count">0 Meldungen</span>
+                    </div>
+                    <button type="button" id="schaden-new" class="zeus-btn primary action-btn">+ Schaden melden</button>
+                    <div id="schaden-form" class="zeus-card" style="display:none;margin-bottom:1rem;max-width:400px;">
+                        <h3 style="margin:0 0 0.75rem;font-size:0.95rem;">+ Schaden melden</h3>
+                        <label>Fahrzeug</label>
+                        <input type="text" id="schaden-fahrzeug" placeholder="z. B. RTW 70-1">
+                        <label>Beschreibung</label>
+                        <textarea id="schaden-beschreibung" rows="3"></textarea>
+                        <button type="button" id="schaden-save" class="zeus-btn primary" style="background:#0d9488;">📍 Melden</button>
+                    </div>
+                    <table class="mb-table" style="width:100%;">
+                        <thead>
+                            <tr><th>Melder</th><th>Fahrzeug</th><th>Beschreibung</th><th>Status</th></tr>
+                        </thead>
+                        <tbody id="schaden-list">
+                            <tr><td colspan="4" class="mb-empty">Keine Meldungen.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="view-antraege" class="view-panel" style="display:none;">
+                    <div class="zeus-header">
+                        <h2>📝 Anträge</h2>
+                        <span id="antraege-count">0 Anträge</span>
+                    </div>
+                    <button type="button" id="antrag-new" class="zeus-btn primary action-btn">+ Antrag stellen</button>
+                    <div id="antrag-form" class="zeus-card" style="display:none;margin-bottom:1rem;max-width:400px;">
+                        <h3 style="margin:0 0 0.75rem;font-size:0.95rem;">+ Antrag stellen</h3>
+                        <label>Betreff</label>
+                        <input type="text" id="antrag-betreff" placeholder="Betreff eingeben">
+                        <label>Details</label>
+                        <textarea id="antrag-details" rows="3"></textarea>
+                        <button type="button" id="antrag-save" class="zeus-btn primary" style="background:#0d9488;">📍 Einreichen</button>
+                    </div>
+                    <table class="mb-table" style="width:100%;">
+                        <thead>
+                            <tr><th>Antragsteller</th><th>Betreff</th><th>Status</th></tr>
+                        </thead>
+                        <tbody id="antraege-list">
+                            <tr><td colspan="3" class="mb-empty">Keine Anträge.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="view-rd-anfragen" class="view-panel" style="display:none;">
+                    <div class="zeus-header">
+                        <h2>📋 Anfragen</h2>
+                        <span id="rd-anfragen-count">0 Anfragen</span>
+                    </div>
+                    <table class="mb-table" style="width:100%;">
+                        <thead>
+                            <tr><th>Typ</th><th>Antragsteller</th><th>Details</th><th>Status</th><th>Aktion</th></tr>
+                        </thead>
+                        <tbody id="rd-anfragen-list">
+                            <tr><td colspan="5" class="mb-empty">Keine Anfragen.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="view-rd-benutzer" class="view-panel" style="display:none;">
+                    <div class="zeus-header">
+                        <h2>👤 Neue Benutzer anlegen</h2>
+                    </div>
+                    <div class="zeus-card" style="max-width:400px;">
+                        <label>Benutzername</label>
+                        <input type="text" id="neu-benutzer" placeholder="Vor- und Nachname">
+                        <label>Dienstnummer</label>
+                        <input type="text" id="neu-dienstnummer" placeholder="z. B. ZTR-02">
+                        <label>Funktion</label>
+                        <select id="neu-funktion">
+                            <option>Techniker</option>
+                            <option>Rettungsdirektor</option>
+                            <option>Vize Rettungsdirektor</option>
+                            <option>Chefarzt</option>
+                            <option>Rettungsdienstleiter</option>
+                            <option>Stv. Rettungsdienstleiter</option>
+                            <option>Stabsstellenleiter</option>
+                            <option>HIO - Hauptinspektionsoffizier</option>
+                            <option>Zugskommandant</option>
+                            <option>Gruppenkommandant</option>
+                            <option>Leiter Rettungsakademie</option>
+                            <option>Stv. L. Rettungsakademie</option>
+                            <option>RAK Lehrer</option>
+                            <option>FISU</option>
+                            <option>Praxisanleiter</option>
+                            <option>Oberarzt OA</option>
+                            <option>Hauptrettungsrat</option>
+                            <option>Oberrettungsrat</option>
+                            <option>Rettungsrat</option>
+                            <option>Hauptrettungskommissar</option>
+                            <option>Oberrettungskommissar</option>
+                            <option>Rettungskommissar</option>
+                            <option>Vize Rettungskommissär</option>
+                            <option>1. Offiziersstellvertreter</option>
+                            <option>Offizierstellvertreter</option>
+                            <option>Hauptsanitätsmeister</option>
+                            <option>Obersanitätsmeister</option>
+                            <option>Sanitätsmeister</option>
+                            <option>Notarzt NA</option>
+                            <option>Notfallsanitäter NKI</option>
+                            <option>Notfallsanitäter NKV</option>
+                            <option>Notfallsanitäter NKA</option>
+                            <option>Notfallsanitäter NFS</option>
+                            <option>Notfallsanitäter NFS i.A</option>
+                            <option>NFS i.A</option>
+                            <option>Rettungssanitäter RS</option>
+                            <option>RS i.A</option>
+                        </select>
+                        <button type="button" id="neu-save" class="zeus-btn primary" style="margin-top:0.75rem;">Benutzer anlegen</button>
+                    </div>
+                    <h3 style="margin:1.5rem 0 0.5rem;font-size:0.95rem;">👤 ANGELEGTE BENUTZER</h3>
+                    <div id="benutzer-list">
+                        <div style="margin-bottom:0.5rem;padding:0.5rem;background:#f9fafb;border-radius:4px;display:flex;justify-content:space-between;align-items:center;">
+                            <div>
+                                <strong>Dr.med. Ralf Tieber</strong>
+                                <span id="admin-funktion-text" style="color:#6b7280;">ZTR-01 · Techniker</span>
+                            </div>
+                            <div>
+                                <select id="admin-funktion" style="margin-right:0.5rem;">
+                                    <option selected>Techniker</option>
+                                    <option>Rettungsdirektor</option>
+                                    <option>Vize Rettungsdirektor</option>
+                                    <option>Chefarzt</option>
+                                    <option>Rettungsdienstleiter</option>
+                                    <option>Stv. Rettungsdienstleiter</option>
+                                    <option>Stabsstellenleiter</option>
+                                    <option>HIO - Hauptinspektionsoffizier</option>
+                                    <option>Zugskommandant</option>
+                                    <option>Gruppenkommandant</option>
+                                    <option>Leiter Rettungsakademie</option>
+                                    <option>Stv. L. Rettungsakademie</option>
+                                    <option>RAK Lehrer</option>
+                                    <option>FISU</option>
+                                    <option>Praxisanleiter</option>
+                                    <option>Oberarzt OA</option>
+                                    <option>Hauptrettungsrat</option>
+                                    <option>Oberrettungsrat</option>
+                                    <option>Rettungsrat</option>
+                                    <option>Hauptrettungskommissar</option>
+                                    <option>Oberrettungskommissar</option>
+                                    <option>Rettungskommissar</option>
+                                    <option>Vize Rettungskommissär</option>
+                                    <option>1. Offiziersstellvertreter</option>
+                                    <option>Offizierstellvertreter</option>
+                                    <option>Hauptsanitätsmeister</option>
+                                    <option>Obersanitätsmeister</option>
+                                    <option>Sanitätsmeister</option>
+                                    <option>Notarzt NA</option>
+                                    <option>Notfallsanitäter NKI</option>
+                                    <option>Notfallsanitäter NKV</option>
+                                    <option>Notfallsanitäter NKA</option>
+                                    <option>Notfallsanitäter NFS</option>
+                                    <option>Notfallsanitäter NFS i.A</option>
+                                    <option>NFS i.A</option>
+                                    <option>Rettungssanitäter RS</option>
+                                    <option>RS i.A</option>
+                                    <option>Vize Rettungsdirektor</option>
+                                    <option>Chefarzt</option>
+                                    <option>Rettungsdienstleiter</option>
+                                    <option>Stv. Rettungsdienstleiter</option>
+                                    <option>Stabsstellenleiter</option>
+                                    <option>HIO - Hauptinspektionsoffizier</option>
+                                    <option>Zugskommandant</option>
+                                    <option>Gruppenkommandant</option>
+                                    <option>Leiter Rettungsakademie</option>
+                                    <option>Stv. L. Rettungsakademie</option>
+                                    <option>RAK Lehrer</option>
+                                    <option>FISU</option>
+                                    <option>Praxisanleiter</option>
+                                    <option>Oberarzt OA</option>
+                                    <option>Hauptrettungsrat</option>
+                                    <option>Oberrettungsrat</option>
+                                    <option>Rettungsrat</option>
+                                    <option>Hauptrettungskommissar</option>
+                                    <option>Oberrettungskommissar</option>
+                                    <option>Rettungskommissar</option>
+                                    <option>Vize Rettungskommissär</option>
+                                    <option>1. Offiziersstellvertreter</option>
+                                    <option>Offizierstellvertreter</option>
+                                    <option>Hauptsanitätsmeister</option>
+                                    <option>Obersanitätsmeister</option>
+                                    <option>Sanitätsmeister</option>
+                                    <option>Notarzt NA</option>
+                                    <option>Notfallsanitäter NKI</option>
+                                    <option>Notfallsanitäter NKV</option>
+                                    <option>Notfallsanitäter NKA</option>
+                                    <option>Notfallsanitäter NFS</option>
+                                    <option>Notfallsanitäter NFS i.A</option>
+                                    <option>NFS i.A</option>
+                                    <option>Rettungssanitäter RS</option>
+                                    <option>RS i.A</option>
+                                </select>
+                                                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="view-uebersicht" style="display:block;">
+                    <section class="card-section">
+                        <div class="section-header">
+                            <h3>📅 Heute abwesend (0)</h3>
+                            <span class="badge-outline">Urlaub</span>
+                        </div>
+                        <p class="ok-text">○ Derzeit ist niemand abwesend.</p>
+                    </section>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon blue">👥</div>
+                            <div class="stat-value" id="mitarbeiter-count">1</div>
+                            <div class="stat-label">Mitarbeiter gesamt</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon orange">📅</div>
+                            <div class="stat-value">0</div>
+                            <div class="stat-label">Offene Urlaubsanträge</div>
+                        </div>
+                    </div>
+
+                    <section class="card-section">
+                        <h3 class="section-title">SCHNELLZUGRIFF</h3>
+                        <div class="quick-grid">
+                            <a href="#" class="quick-card">
+                                <span class="qc-icon">👥</span>
+                                <span class="qc-title">Personalübersicht</span>
+                                <span class="qc-sub">Berufsrettung Wien</span>
+                            </a>
+                            <a href="#" class="quick-card">
+                                <span class="qc-icon">📋</span>
+                                <span class="qc-title">Ansprechpartner</span>
+                                <span class="qc-sub">Kontakte der Berufsrettung</span>
+                            </a>
+                            <a href="#" class="quick-card">
+                                <span class="qc-icon">📅</span>
+                                <span class="qc-title">Urlaubsanträge</span>
+                                <span class="qc-sub">Einreichen & bearbeiten</span>
+                            </a>
+                            <a href="#" class="quick-card">
+                                <span class="qc-icon">💼</span>
+                                <span class="qc-title">Nebenbeschäftigung</span>
+                                <span class="qc-sub">Antrag an die Personalstelle</span>
+                            </a>
+                        </div>
+                    </section>
+
+                    <section class="card-section akh-section">
+                        <div class="section-header">
+                            <h3>🏥 AKH Kapazität <small>live · ZNA: 0 Patient/innen in Wartezone/Behandlung</small></h3>
+                            <span class="akh-label">AKH Wien</span>
+                        </div>
+                        <div class="akh-tags">
+                            <span class="akh-tag">Zentrale Notaufnahme 8/8 frei</span>
+                            <span class="akh-tag">Chirurgie / Unfallchirurgie 8/8 frei</span>
+                            <span class="akh-tag">Innere Medizin 8/8 frei</span>
+                            <span class="akh-tag">Intensivstation 6/6 frei</span>
+                            <span class="akh-tag">Psychiatrie 4/4 frei</span>
+                        </div>
+                    </section>
+                </div>
+
+
+
+                <!-- Heute abwesend -->
+                
+                <!-- Kalender View -->
+                <div id="view-kalender" class="view-panel" style="display:none;">
+                    <div class="cal-toolbar">
+                        <div class="cal-toolbar-left">
+                            <button id="cal-today" type="button" class="cal-btn">Heute</button>
+                            <button id="cal-prev" type="button" class="cal-btn cal-arrow">‹</button>
+                            <button id="cal-next" type="button" class="cal-btn cal-arrow">›</button>
+                            <span id="cal-month-year" class="cal-title"></span>
+                        </div>
+                        <div class="cal-toolbar-right">
+                            <button class="cal-view-btn" data-viewmode="tag">Tag</button>
+                            <button class="cal-view-btn" data-viewmode="woche">Woche</button>
+                            <button class="cal-view-btn active" data-viewmode="monat">Monat</button>
+                            <button class="cal-view-btn" data-viewmode="liste">Liste</button>
+                        </div>
+                    </div>
+                    <div id="calendar-grid" class="calendar-grid"></div>
+                </div>
+
+
+                <!-- ZEUS View -->
+                <div id="view-zeus" class="view-panel" style="display:none;">
+                    <div class="zeus-header">
+                        <h2>⏱ ZEUS – Zeiterfassung & Rückerstattungen</h2>
+                    </div>
+                    <div class="zeus-tabs">
+                        <button class="zeus-tab active" data-tab="stempeln">⏱ Stempeln</button>
+                        <button class="zeus-tab" data-tab="monatsblatt">📅 Monatsblatt</button>
+                        <button class="zeus-tab" data-tab="rueckerstattungen">📋 Rückerstattungen</button>
+                    </div>
+
+                    <div class="zeus-content" data-tabcontent="stempeln">
+                        <div class="zeus-grid">
+                            <div class="zeus-card">
+                                <h3>⏱ STATUS</h3>
+                                <p class="zeus-status">Nicht im Dienst.</p>
+                                <button class="zeus-btn primary">→ Dienstbeginn – Einsatzdienst</button>
+                                <button class="zeus-btn">→ Dienstbeginn – Verwaltungsdienst</button>
+                                <p class="zeus-hint">Noch eingestempelt? Nach einigen Stunden kommt eine Erinnerung per Discord. Nach 12 Stunden wird automatisch mit 0 Stunden geschlossen – dann unten unter „Letzte Einträge“ das echte Dienstende nachtragen, die Leitung bestätigt.</p>
+                            </div>
+                            <div class="zeus-card">
+                                <h3>⏱ NACHERFASSUNG (MIT FREIGABE)</h3>
+                                <label>Datum</label>
+                                <input type="date" placeholder="tt.mm.jjjj">
+                                <label>Von</label>
+                                <input type="time">
+                                <label>Bis</label>
+                                <input type="time">
+                                <label>Art</label>
+                                <select>
+                                    <option>Einsatzdienst</option>
+                                    <option>Verwaltungsdienst</option>
+                                </select>
+                                <label>Begründung</label>
+                                <input type="text" placeholder="z. B. Stempeln vergessen, Großeinsatz">
+                                <p class="zeus-hint">Nacherfassung nur für Zeiten, die höchstens 72 Stunden zurückliegen. Die Zeiterfassung ist verpflichtend.</p>
+                                <button class="zeus-btn">✈ Zur Freigabe einreichen</button>
+                            </div>
+                        </div>
+
+                        <div class="zeus-table-wrap">
+                            <h3>≡ LETZTE EINTRÄGE</h3>
+                            <table class="zeus-table">
+                                <thead>
+                                    <tr>
+                                        <th>Beginn</th>
+                                        <th>Ende</th>
+                                        <th>Art</th>
+                                        <th>Dauer</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="zeus-entries"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="zeus-content" data-tabcontent="monatsblatt" style="display:none;">
+                        <div class="monatsblatt-header">
+                            <div class="monatsblatt-nav">
+                                <button id="mb-prev" type="button" class="cal-btn">←</button>
+                                <span id="mb-month-year">November 2026</span>
+                                <button id="mb-next" type="button" class="cal-btn">→</button>
+                            </div>
+                            <button id="mb-pdf" type="button" class="zeus-btn">📄 Monatsblatt (PDF)</button>
+                        </div>
+                        <div class="monatsblatt-summary" id="mb-summary">
+                            Verwaltungsdienst 0:00 h &nbsp; Einsatzdienst 0:00 h &nbsp; Gesamt 0:00 h
+                        </div>
+                        <div id="mb-list" class="monatsblatt-list">
+                            <p class="mb-empty">Keine freigegebenen Zeiten in diesem Monat.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                    <div class="zeus-content" data-tabcontent="rueckerstattungen" style="display:none;">
+                        <div class="rueck-grid">
+                            <div class="zeus-card">
+                                <h3>📋 RÜCKERSTATTUNG BEANTRAGEN</h3>
+                                <div class="form-row">
+                                    <div>
+                                        <label>Art</label>
+                                        <select id="rueck-art">
+                                            <option>Tankrechnung</option>
+                                            <option>Reparatur</option>
+                                            <option>Verpflegung (Großeinsatz)</option>
+                                            <option>Ausrüstung</option>
+                                            <option>Sonstiges</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label>Betrag (€)</label>
+                                        <input type="number" id="rueck-betrag" step="0.01" placeholder="45,90">
+                                    </div>
+                                    <div>
+                                        <label>Belegdatum</label>
+                                        <input type="date" id="rueck-datum">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div>
+                                        <label>Rechnungsnummer</label>
+                                        <input type="text" id="rueck-rechnung">
+                                    </div>
+                                    <div>
+                                        <label>Fahrzeug (Funkrufname/Kennzeichen)</label>
+                                        <input type="text" id="rueck-fahrzeug">
+                                    </div>
+                                </div>
+                                <label>Zweck</label>
+                                <input type="text" id="rueck-zweck" placeholder="z. B. Betankung nach Streifendienst">
+                                <button id="rueck-submit" type="button" class="zeus-btn primary" style="margin-top:1rem;">✈ Einreichen</button>
+                                <p class="zeus-hint">Freigegebene Rückerstattungen werden gesammelt am Monatsende ingame ausgezahlt und automatisch als Ausgabe gebucht.</p>
+                            </div>
+                            <div class="zeus-card">
+                                <h3>≡ MEINE ANTRÄGE (<span id="rueck-count">0</span>)</h3>
+                                <div id="rueck-list" class="rueck-list">
+                                    <p class="mb-empty">Keine Anträge.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                <div id="view-vorschriften" class="view-panel" style="display:none;">
+                    <div id="vorschrift-create" style="display:none;margin-bottom:1rem;">
+                        <div class="zeus-card" style="max-width:500px;">
+                            <h3 style="margin:0 0 0.75rem;font-size:0.95rem;">📝 Neue Vorschrift</h3>
+                            <label>Titel</label>
+                            <input type="text" id="vorschrift-titel" placeholder="Titel der Vorschrift">
+                            <label>Art</label>
+                            <select id="vorschrift-art">
+                                <option>Lehraussagen</option>
+                                <option>Standart Operating Procedures</option>
+                                <option>Dienstanweisungen</option>
+                                <option>Lehrgänge</option>
+                            </select>
+                            <label>Sachgebiet</label>
+                            <select id="vorschrift-sachgebiet">
+                                <option>Medizinisch</option>
+                                <option>Organisatorisch</option>
+                                <option>Allgemein</option>
+                            </select>
+                            <label>Text</label>
+                            <textarea id="vorschrift-text" rows="4"></textarea>
+                            <button type="button" id="vorschrift-save" class="zeus-btn primary action-btn">Veröffentlichen</button>
+                        </div>
+                    </div>
+                    <div class="vorschriften-header">
+                        <h2>📋 Vorschriften</h2>
+                        <span class="vorschriften-count" id="vorschriften-count">0 in Geltung</span>
+                    </div>
+                    <div class="vorschriften-search">
+                        <input type="text" id="vorschriften-search" placeholder="Vorschriften durchsuchen (Titel, Text, Zahl) ...">
+                        <button type="button" class="cal-btn">🔍 Suchen</button>
+                    </div>
+                    <div class="vorschriften-filters">
+                        <div class="filter-group">
+                            <button class="filter-btn active" data-art="alle">Alle Arten</button>
+                            <button class="filter-btn" data-art="lehraussagen">Lehraussagen</button>
+                            <button class="filter-btn" data-art="sop">Standart Operating Procedures</button>
+                            <button class="filter-btn" data-art="dienstanweisungen">Dienstanweisungen</button>
+                            <button class="filter-btn" data-art="lehrgaenge">Lehrgänge</button>
+                        </div>
+                        <div class="sachgebiet">
+                            Sachgebiet: 
+                            <button class="filter-chip active" data-gebiet="alle">alle</button>
+                            <button class="filter-chip" data-gebiet="medizinisch">Medizinisch</button>
+                            <button class="filter-chip" data-gebiet="organisatorisch">Organisatorisch</button>
+                            <button class="filter-chip" data-gebiet="allgemein">Allgemein</button>
+                        </div>
+                        
+                        </div>
+                    </div>
+                    <div id="vorschriften-list" class="vorschriften-list">
+                        
+                    </div>
+                </div>
+
+
+                
+
+
+                
+
+
+                
+
+
+                
+
+
+                
+
+                
+                <style>
+.rank-badge { display:inline-block; width:18px; height:22px; border-radius:2px; margin-right:0.4rem; vertical-align:middle; border:1px solid #999; }
+.rank-item { display:flex; align-items:center; padding:0.4rem 0.6rem; background:#fff; border:1px solid #e5e7eb; border-radius:6px; font-size:0.82rem; }
+</style>
+<div id="view-rangtafel" class="view-panel" style="display:none;">
+                    <div class="zeus-header">
+                        <h2>⭐ Rangtafel</h2>
+                    </div>
+                    <h3 style="margin:1rem 0 0.5rem;font-size:0.9rem;color:#6b7280;">RETTUNGSDIREKTION</h3>
+                    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0.5rem;margin-bottom:1rem;">
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Rettungsdirektor</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Vize Rettungsdirektor</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Kaufmännischer Leiter</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Rettungsdienstleiter</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Chefarzt</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Büroleiter</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Stabstellenleiter</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Stellvertretender Kaufmännischer Leiter</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Stellvertretender Rettungsdienstleiter</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Stellvertretender Chefarzt</strong></div>
+                    </div>
+                    <h3 style="margin:1rem 0 0.5rem;font-size:0.9rem;color:#6b7280;">OFFIZIERE</h3>
+                    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0.5rem;margin-bottom:1rem;">
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Hauptrettungsrat (OA)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Hauptrettungsrat (EO)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Hauptrettungsrat (RAK)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Oberrettungsrat (OA)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Oberrettungsrat (EO)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Oberrettungsrat (RAK)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Rettungsrat (OA)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Rettungsrat (EO)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Rettungsrat (RAK)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Hauptrettungskommissär (OA)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Hauptrettungskommissär (EO)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Hauptrettungskommissär (RAK)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Oberrettungskommissär (OA)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Oberrettungskommissär (EO)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Oberrettungskommissär (RAK)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Rettungskomissär (OA)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Rettungskomissär (EO)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Rettungskomissär (RAK)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Offiziersanwärter (OA)</strong></div>
+                    </div>
+                    <h3 style="margin:1rem 0 0.5rem;font-size:0.9rem;color:#6b7280;">UNTEROFFIZIERE</h3>
+                    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0.5rem;margin-bottom:1rem;">
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Vize Rettungskommissär (EUO)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Vize Rettungskommissär (RAK)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>1. Offizier Stellvertreter (EUO)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>1. Offizier Stellvertreter (RAK)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Offizier Stellvertreter (EUO)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Offizier Stellvertreter (RAK)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Hauptsanitätsmeister (EUO)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Hauptsanitätsmeister (RAK)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Obersanitätsmeister (EUO)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Obersanitätsmeister (RAK)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Sanitätsmeister (EUO)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Sanitätsmeister (RAK)</strong></div>
+                    </div>
+                    <h3 style="margin:1rem 0 0.5rem;font-size:0.9rem;color:#6b7280;">EINSATZPERSONAL</h3>
+                    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0.5rem;margin-bottom:1rem;">
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Notarzt</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Notfallsanitäter NKI</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Notfallsanitäter NKV</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Notfallsanitäter NKA</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Notfallsanitäter</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Rettungssanitäter</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Rettungssanitäter i.A</strong></div>
+                    </div>
+                    <h3 style="margin:1rem 0 0.5rem;font-size:0.9rem;color:#6b7280;">OHNE KATEGORIE</h3>
+                    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0.5rem;margin-bottom:1rem;">
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Hauptrettungsrat (VW)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Hauptrettungsrat (DISP)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Oberrettungsrat (VW)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Oberrettungsrat (DISP)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Rettungsrat (VW)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Rettungsrat (DISP)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Hauptrettungskommissär (VW)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Hauptrettungskommissär (DISP)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Oberrettungskommissär (VW)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Oberrettungskommissär (DISP)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Rettungskomissär (VW)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Rettungskomissär (DISP)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Vize Rettungskommissär (VW)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Vize Rettungskommissär (DISP)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>1. Offizier Stellvertreter (VW)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>1. Offizier Stellvertreter (DISP)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Offizier Stellvertreter (VW)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Offizier Stellvertreter (DISP)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Hauptsanitätsmeister (VW)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Hauptsanitätsmeister (DISP)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Obersanitätsmeister (VW)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Obersanitätsmeister (DISP)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Sanitätsmeister (VW)</strong></div>
+                        <div class="rank-item"><img src="badges/dir0.png" style="width:18px;height:22px;margin-right:0.4rem;vertical-align:middle;"><strong>Sanitätsmeister (DISP)</strong></div>
+                    </div>
+                </div>
+
+                
+
+                
+
+
+
+                
+
+                
+                
+
+                
+
+                <div id="view-rd-funktionen" class="view-panel" style="display:none;">
+                    <div class="zeus-header">
+                        <h2>👥 Funktionen</h2>
+                    </div>
+                    <h3 style="margin:1rem 0 0.5rem;font-size:0.9rem;color:#6b7280;">RETTUNGSDIREKTION</h3>
+<div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem;">
+<div class="rueck-item" style="min-width:180px;"><strong>Rettungsdirektor</strong></div>
+<div class="rueck-item" style="min-width:180px;"><strong>Vize Rettungsdirektor</strong></div>
+<div class="rueck-item" style="min-width:180px;"><strong>Chefarzt</strong></div>
+<div class="rueck-item" style="min-width:180px;"><strong>Rettungsdienstleiter</strong></div>
+<div class="rueck-item" style="min-width:180px;"><strong>Stv. Rettungsdienstleiter</strong></div>
+<div class="rueck-item" style="min-width:180px;"><strong>Stabsstellenleiter</strong></div>
+</div>
+<h3 style="margin:1rem 0 0.5rem;font-size:0.9rem;color:#6b7280;">HAUPTINSPEKTION</h3>
+<div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem;">
+<div class="rueck-item" style="min-width:180px;"><strong>HIO - Hauptinspektionsoffizier</strong></div>
+<div class="rueck-item" style="min-width:180px;"><strong>Zugskommandant</strong></div>
+<div class="rueck-item" style="min-width:180px;"><strong>Gruppenkommandant</strong></div>
+</div>
+<h3 style="margin:1rem 0 0.5rem;font-size:0.9rem;color:#6b7280;">RETTUNGSAKADEMIE</h3>
+<div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem;">
+<div class="rueck-item" style="min-width:180px;"><strong>Leiter Rettungsakademie</strong></div>
+<div class="rueck-item" style="min-width:180px;"><strong>Stv. L. Rettungsakademie</strong></div>
+<div class="rueck-item" style="min-width:180px;"><strong>RAK Lehrer</strong></div>
+<div class="rueck-item" style="min-width:180px;"><strong>FISU</strong></div>
+<div class="rueck-item" style="min-width:180px;"><strong>Praxisanleiter</strong></div>
+</div>
+<h3 style="margin:1rem 0 0.5rem;font-size:0.9rem;color:#6b7280;">OBERARZT</h3>
+<div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem;">
+<div class="rueck-item" style="min-width:180px;"><strong>Oberarzt OA</strong></div>
+</div>
+<h3 style="margin:1rem 0 0.5rem;font-size:0.9rem;color:#6b7280;">OFFIZIERE</h3>
+<div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem;">
+<div class="rueck-item" style="min-width:180px;"><strong>Hauptrettungsrat</strong></div>
+<div class="rueck-item" style="min-width:180px;"><strong>Oberrettungsrat</strong></div>
+<div class="rueck-item" style="min-width:180px;"><strong>Rettungsrat</strong></div>
+<div class="rueck-item" style="min-width:180px;"><strong>Hauptrettungskommissar</strong></div>
+<div class="rueck-item" style="min-width:180px;"><strong>Oberrettungskommissar</strong></div>
+<div class="rueck-item" style="min-width:180px;"><strong>Rettungskommissar</strong></div>
+</div>
+<h3 style="margin:1rem 0 0.5rem;font-size:0.9rem;color:#6b7280;">UNTEROFFIZIERE</h3>
+<div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem;">
+<div class="rueck-item" style="min-width:180px;"><strong>Vize Rettungskommissär</strong></div>
+<div class="rueck-item" style="min-width:180px;"><strong>1. Offiziersstellvertreter</strong></div>
+<div class="rueck-item" style="min-width:180px;"><strong>Offizierstellvertreter</strong></div>
+<div class="rueck-item" style="min-width:180px;"><strong>Hauptsanitätsmeister</strong></div>
+<div class="rueck-item" style="min-width:180px;"><strong>Obersanitätsmeister</strong></div>
+<div class="rueck-item" style="min-width:180px;"><strong>Sanitätsmeister</strong></div>
+</div>
+<h3 style="margin:1rem 0 0.5rem;font-size:0.9rem;color:#6b7280;">MEDIZINISCHE</h3>
+<div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem;">
+<div class="rueck-item" style="min-width:180px;"><strong>SUSPENDIERT</strong></div>
+<div class="rueck-item" style="min-width:180px;"><strong>Notarzt NA</strong></div>
+<div class="rueck-item" style="min-width:180px;"><strong>Notfallsanitäter NKI</strong></div>
+<div class="rueck-item" style="min-width:180px;"><strong>Notfallsanitäter NKV</strong></div>
+<div class="rueck-item" style="min-width:180px;"><strong>Notfallsanitäter NKA</strong></div>
+<div class="rueck-item" style="min-width:180px;"><strong>Notfallsanitäter NFS</strong></div>
+<div class="rueck-item" style="min-width:180px;"><strong>Notfallsanitäter NFS i.A</strong></div>
+<div class="rueck-item" style="min-width:180px;"><strong>NFS i.A</strong></div>
+<div class="rueck-item" style="min-width:180px;"><strong>Rettungssanitäter RS</strong></div>
+<div class="rueck-item" style="min-width:180px;"><strong>RS i.A</strong></div>
+</div>
+
+                </div>
+    <script src="script.js"></script>
+</body>
+</html>
